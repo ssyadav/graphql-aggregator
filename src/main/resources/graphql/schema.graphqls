@@ -1,0 +1,94 @@
+scalar JSON
+
+type Query {
+    users: [User]!
+    getUsers(fields: [String!]): JSON
+    userById(id: ID!): User
+    userByEmail(email: String!): User
+    userProfile(id: ID!): UserProfile
+    movieDetails(id: ID!): MovieDetails
+    moviesByGenre(genre: Genre): [MovieSummary]!
+
+}
+
+type Mutation{
+    createUser(user: UserInput!): User
+    updateUser(id: ID!, user: UserInput!): User
+}
+
+type User {
+   id: ID!
+   firstname: String
+   lastname: String
+   email: String
+   phone: String
+   status: String
+   age: Int
+   city: String
+}
+
+input UserInput {
+   firstname: String
+   lastname: String
+   email: String
+   phone: String
+   status: String
+   age: Int
+   city: String
+}
+
+type UserProfile{
+    id: ID!
+    name: String!
+    favoriteGenre: Genre!
+    watchList: [MovieSummary]!
+    recommended: [MovieSummary]!
+}
+
+
+interface Movie{
+    id: ID!
+    title: String!
+    releaseYear: Int!
+    rating: String!
+    genre: Genre!
+}
+
+type MovieSummary implements Movie{
+    id: ID!
+    title: String!
+    releaseYear: Int!
+    rating: String!
+    genre: Genre!
+}
+
+type MovieDetails implements Movie{
+    id: ID!
+    title: String!
+    releaseYear: Int!
+    rating: String!
+    genre: Genre!
+    reviews: [Review]!
+}
+
+
+enum Genre{
+    ACTION,
+    ADVENTURE,
+    ANIMATION,
+    BIOGRAPHY,
+    COMEDY,
+    CRIME,
+    DOCUMENTARY,
+    DRAMA,
+    FANTASY,
+    HORROR,
+    MYSTERY
+}
+
+type Review{
+    id: ID!
+    username: String
+    rating: Int
+    comment: String
+}
